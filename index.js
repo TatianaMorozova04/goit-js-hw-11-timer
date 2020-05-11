@@ -19,6 +19,19 @@ const CountdownTimer = ({ selector, targetDate }) => {
     daysTimerRef.textContent = days;
   };
 
+  const changeDate = () => {
+    const nowData = Date.now();
+    const futureDate = Date.parse(targetDate);
+    const differenceTime = futureDate - nowData;
+    if (differenceTime > 0) {
+      updateTimer(differenceTime);
+    } else {
+      turnOffTimer();
+    }
+  };
+  changeDate();
+
+  
   let intervalId;
 
   const turnOffTimer = () => {
@@ -31,14 +44,7 @@ const CountdownTimer = ({ selector, targetDate }) => {
 
   const turnOnTimer = () => {
     intervalId = setInterval(() => {
-      const nowData = Date.now();
-      const futureDate = Date.parse(targetDate);
-      const differenceTime = futureDate - nowData;
-      if (differenceTime > 0) {
-        updateTimer(differenceTime);
-      } else {
-        turnOffTimer();
-      }
+      changeDate();
     }, 1000);
   };
 
